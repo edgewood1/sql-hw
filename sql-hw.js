@@ -40,7 +40,7 @@ console.log("\n");
       type: "input",
       message: "What is the ID of the product that you would like to buy?",
        validate: function(value) {
-        if (isNaN(value) === false) {
+        if ((isNaN(value) === false) && (value>0 && value<12)) {
         return true;
       }
       return false;
@@ -51,7 +51,7 @@ console.log("\n");
       type: "input",
       message: "How many units would you like to buy?",
        validate: function(value) {
-       if (isNaN(value) === false) {
+       if ((isNaN(value) === false)) {
         return true;
       }
       return false;
@@ -59,8 +59,15 @@ console.log("\n");
 
     }]).then(function(answers) {
 
-      console.log("\n\nYou've ordered " + answers.units + " of product no. " + answers.id);
+     
+
+      if (answers.id <0 || answers.id >11) {
+      console.log("\nThis id doesn't exist");
+      start();
+    }
   
+
+   console.log("\n\nYou've ordered " + answers.units + " of product no. " + answers.id);
   ///////////This selects based on id given above.... and dumps all in RES
 
   var query = "SELECT * FROM products WHERE ?";
@@ -77,7 +84,7 @@ console.log("\n");
   
 
   if (change<0){
-      console.log("\n\nWe don't have this many - we only have " + result[0].Stock_quantity + " in stock ---- try again");
+      console.log("\n\nBut, unfortunately, we don't have this many - we have " + result[0].Stock_quantity + " in stock ---- try again\n\n");
      
       start();
   }
